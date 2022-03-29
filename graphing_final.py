@@ -59,8 +59,8 @@ def graph_distribution(loaded_distributions, s_D, strategy, color, labels_flag):
 
 def main():
 
-  # distributions = np.load("FINAL distributions 0.01 to 1.0.npy") # 10000, OPT, violet
-  distributions = np.load("March updated distributions 0.01 to 1.0.npy") # 10000, COIN, red
+# distributions = np.load("FINAL distributions 0.01 to 1.0.npy") # 10000, OPT, violet
+  distributions = np.load("COIN distributions 0.01 to 1.0.npy") # 10000, COIN, red
 
   graph_distribution(distributions, s_D=10000, strategy="COIN", color="red", labels_flag=True)
 
