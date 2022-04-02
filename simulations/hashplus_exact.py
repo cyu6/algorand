@@ -29,16 +29,17 @@ def hashplus_exact(D, alpha, beta, l):
     
     # step 2: for all i >= 1, draw r_i from D i.i.d.
     for k in range(i):
-      r[k] = D[np.random.randint(low=0, high=x)]
+      r[k] = D[np.random.randint(low=0, high=n)]
     
     # step 3: draw network's coin and corresponding reward
-    c0 = np.random.exponential(scale=(1/(beta*(1-alpha))))
-    r0 = D[np.random.randint(low=0, high=x)]
+    c0 = 0
+    r0 = 0
+    if beta != 0:
+      c0 = np.random.exponential(scale=(1/(beta*(1-alpha))))
+      r0 = D[np.random.randint(low=0, high=n)]
 
     # step 4: let pos such that c_pos < c0 < c_pos+1
-    pos =  bisect.bisect_left(c, c0)
-
-    # print("position of c0: ", pos)
+    pos =  bisect.bisect_left(c, c0) if beta != 0 else i
 
     # step 5: output reward. note: if we take the honest coin, we also subtract l to "reset".
     # step 5a: calculate reward if we take the honest coin

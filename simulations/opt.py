@@ -10,7 +10,7 @@ Parameters:
 D = distribution of expected future rounds won
 alpha = proportional stake in system
 """
-def opt(D, alpha):
+def opt(D, alpha, _beta, _l):
   c = [0]*i # coin values
   r = [0]*i # (expected) reward values
   F = [0]*n # final distribution
