@@ -27,7 +27,9 @@ def simulate(alpha, beta, l, strategy_sim, difference, times, debug_flag):
   currentavg = 0
   runs = 1
   runs_in_range = 0
-  while abs(lastavg - currentavg) > difference or runs_in_range < times:
+  # while abs(lastavg - currentavg) > difference or runs_in_range < times:
+  const = 0
+  while const < 10:
     nowF = strategy_sim(bestF, alpha, beta, l)
     lastavg = np.average(bestF)
     currentavg = np.average(nowF)
@@ -38,6 +40,8 @@ def simulate(alpha, beta, l, strategy_sim, difference, times, debug_flag):
       runs_in_range += 1
     elif abs(lastavg - currentavg) > difference and runs_in_range > 0:
       runs_in_range = 0
+
+    const += 1
     
     if debug_flag:
       print("RUN #: ", runs)
@@ -64,7 +68,7 @@ def single_alpha_run(alpha, beta, strategy_sim, difference, times, debug_flag, e
     if debug_flag: print("Reward for ", l, ": ", reward)
     
     # arbitrary error diff
-    if abs(reward) < 0.01:
+    if abs(reward) < 0.001:
       break
 
     if start == end: break

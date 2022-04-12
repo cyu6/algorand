@@ -225,6 +225,8 @@ def hashplus_sample(D, alpha, beta, l):
       pos_c = bisect.bisect_left(c, c0) if beta != 0 else i
 
       # compute g = adversary's best reward
+
+      # TODO: optimize this with arange(pos_c)
       g = 0
       if pos_c != 0:
         g = np.max([np.exp(c[s]*(alpha-1)*(1-beta))*(1+r[s]) - x*s for s in range(pos_c)])
