@@ -1,19 +1,17 @@
-import bisect
-import math
-from cv2 import sort
 import numpy as np
-from scipy import misc
-from sqlalchemy import all_, false, true
+import statistics
 
 """Strategies"""
 from strategies import opt, coin, optplus, hashplus_exact, hashplus_sample
+from pooling import hashplus_sample_pool
 
 """Setup"""
 from constants import i, n, m, x
 
 # Simulates expected rewards for given alpha and lambda.
 def simulate(alpha, beta, l, strategy_sim, difference, times, debug_flag):
-  D_honest = np.zeros(n)
+  D_honest = np.full(n, (-l-alpha))
+  # D_honest = np.zeros(n)
   
   # run first iteration
   F0 = strategy_sim(D_honest, alpha, beta, l)
@@ -27,9 +25,9 @@ def simulate(alpha, beta, l, strategy_sim, difference, times, debug_flag):
   currentavg = 0
   runs = 1
   runs_in_range = 0
-  # while abs(lastavg - currentavg) > difference or runs_in_range < times:
-  const = 0
-  while const < 10:
+  while abs(lastavg - currentavg) > difference or runs_in_range < times:
+  # const = 0
+  # while const < 10:
     nowF = strategy_sim(bestF, alpha, beta, l)
     lastavg = np.average(bestF)
     currentavg = np.average(nowF)
@@ -41,12 +39,13 @@ def simulate(alpha, beta, l, strategy_sim, difference, times, debug_flag):
     elif abs(lastavg - currentavg) > difference and runs_in_range > 0:
       runs_in_range = 0
 
-    const += 1
+    # const += 1
     
     if debug_flag:
       print("RUN #: ", runs)
       print("CURR AVG: ", currentavg)
       print("RUN IN RANGE #: ", runs_in_range)
+      # print("VARIANCE: ", statistics.variance(nowF))
 
   return bestF
 
@@ -101,9 +100,9 @@ def gather_data(strategy_sim, beta, difference, times, output_file_name, debug_f
       reward = np.average(bestF)
 
       if debug_flag: print("Reward for ", l, ": ", reward)
-      
+
       # arbitrary error diff
-      if abs(reward) < 0.01:
+      if abs(reward) < 0.001:
         break
 
       if start == end: break
@@ -173,8 +172,8 @@ def main():
   # single_alpha_run(alpha=0.1, beta=0, strategy_sim=coin, difference=0.01, times=4, debug_flag=True)
  
  
-  gather_data(hashplus_sample, beta=0.5, difference=0.01, times=4, output_file_name="HASHPLUS_trial=1_beta=0.5_alpha=0.01-1.0.npy", debug_flag=True)
-  
+  gather_data(hashplus_sample_pool, beta=0.25, difference=0.01, times=4, output_file_name="HASHPLUS_trial=2_beta=0.5_alpha=0.01-1.0.npy", debug_flag=True)
+
   # distributions = np.load("OPTPLUS distributions 0.01 to 1.0.np32y")
   # gather_data_from_given_start(distributions, optplus_sim, start_alpha=0.86, 
   #   difference=0.01, times=4, output_file_name="OPTPLUS distributions 0.01 to 1.0.npy", debug_flag=True)

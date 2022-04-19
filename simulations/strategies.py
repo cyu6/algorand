@@ -237,10 +237,13 @@ def hashplus_sample(D, alpha, beta, l):
 
       # approximate integral over PDF of r
       r_pdf = np.sum(np.where(D >= r_thresh, D*np.exp((alpha-1.0)*(1.0-beta)*c0) - x*pos_c, 0.0))
-      
-      # add to sum
-      samples_sum = samples_sum + (g*k + r_pdf)/n
 
-    F[j] = samples_sum/m - alpha - l
+      # reset or no?
+      reward = max(0.0, g*k + r_pdf)
+
+      # add to sum
+      samples_sum = samples_sum + reward
+
+    F[j] = samples_sum/(m*n) - alpha - l
 
   return F
