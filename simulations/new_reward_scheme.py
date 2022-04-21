@@ -223,3 +223,6 @@ def main():
   # distributions = np.load("OPTPLUS distributions 0.01 to 1.0.np32y")
   gather_data_from_given_start(distributions, hashplus_sample_pool, start_alpha=0.01, beta=0.5,
     difference=0.01, times=4, output_file_name="HASHPLUS_x=0.01_beta=0.5_alpha=0.01-1.0.npy", debug_flag=True)
+
+if __name__ == "__main__":
+    main()
