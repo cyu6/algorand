@@ -137,10 +137,10 @@ def single_alpha_run(alpha, beta, strategy_sim, difference, times, debug_flag, e
 
 # Run simulation for x = 0 to 10 in increments of 0.1.
 def gather_data_for_x_fixed_alpha_beta(strategy_sim, alpha, beta, difference, times, output_file_name, debug_flag):
-  distributions = np.zeros((101, n+2))
-
-  for num in range(0, 101): # multiples of 1/100
-    x = num/10
+  distributions = np.zeros((9, n+2))
+  count = 0
+  for num in range(15, 23): # multiples of 1/100
+    x = num/2
     if debug_flag: print("x reward: ", x)
 
     # binary search for lambda
@@ -171,9 +171,11 @@ def gather_data_for_x_fixed_alpha_beta(strategy_sim, alpha, beta, difference, ti
     if debug_flag: print("LAST lambda was ", l)
 
     # Save the best distribution and corresponding lambda
-    distributions[num][0] = x
-    distributions[num][1] = l
-    distributions[num][2:] = bestF
+    distributions[count][0] = x
+    distributions[count][1] = l
+    distributions[count][2:] = bestF
+    count += 1
+
     np.save(output_file_name, distributions)
 
 # Run simulation starting at alpha = start_alpha to 1.0 in increments of 0.01.
@@ -223,7 +225,7 @@ def main():
   # gather_data_from_given_start(distributions, hashplus_sample_pool, start_alpha=0.09, beta=0.5,
   #  difference=0.01, times=4, output_file_name="HASHPLUS_x=0.01_beta=0.5_alpha=0.01-1.0.npy", debug_flag=True)
 
-  gather_data_for_x_fixed_alpha_beta(hashplus_sample_pool, alpha=0.25, beta=1.0, difference=0.01, times=4, output_file_name="X_INCREASE_0.1-10_alpha=0.25_beta=1", debug_flag=True)
+  gather_data_for_x_fixed_alpha_beta(hashplus_sample_pool, alpha=0.25, beta=1.0, difference=0.01, times=4, output_file_name="X_INCREASE_4.5-11_alpha=0.25_beta=1", debug_flag=True)
 
 if __name__ == "__main__":
     main()
@@ -231,3 +233,6 @@ if __name__ == "__main__":
 
 # LAST lambda was  0.087890625 -> first run for x = 0
 # LAST lambda was  0.0947265625 -> second run for x = 0
+
+#[0.0751953125, 0.0751953125, 0.0751953125, 0.0751953125, 0.0751953125, 0.0751953125]
+#[4.5, 5.0, 5.5, 6.0, 6.5, 7.0]
