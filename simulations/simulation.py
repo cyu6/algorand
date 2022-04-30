@@ -3,7 +3,7 @@ import statistics
 
 """Strategies"""
 from strategies import opt, coin, optplus, hashplus_exact, hashplus_sample
-from pooling import hashplus_sample_pool
+from hashplus_pooling import hashplus_sample_pool
 
 """Setup"""
 from constants import i, n, m, x
@@ -162,21 +162,8 @@ def gather_data_from_given_start(distributions, strategy_sim, start_alpha, beta,
 
 def main():
   # single_alpha_run(alpha=0.01, beta=0.5, strategy_sim=hashplus_sample, difference=0.01, times=4, debug_flag=True)
-
-  # single_alpha_run(alpha=0.1, beta=0.5, strategy_sim=hashplus_exact, difference=0.01, times=4, debug_flag=True)
-
-  # attempt at sanity check
-  # HASHPLUS_SAMPLE
-  # single_alpha_run(alpha=0.1, beta=0, strategy_sim=hashplus_sample, difference=0.001, times=2, debug_flag=True, end_lambda=0)
-  # COIN
-  # single_alpha_run(alpha=0.1, beta=0, strategy_sim=coin, difference=0.01, times=4, debug_flag=True)
  
- 
-  gather_data(hashplus_sample_pool, beta=0.25, difference=0.01, times=4, output_file_name="HASHPLUS_trial=2_beta=0.5_alpha=0.01-1.0.npy", debug_flag=True)
-
-  # distributions = np.load("OPTPLUS distributions 0.01 to 1.0.np32y")
-  # gather_data_from_given_start(distributions, optplus_sim, start_alpha=0.86, 
-  #   difference=0.01, times=4, output_file_name="OPTPLUS distributions 0.01 to 1.0.npy", debug_flag=True)
+  gather_data(hashplus_sample_pool, beta=0.25, difference=0.01, times=4, output_file_name="", debug_flag=True)
 
 
 if __name__ == "__main__":
